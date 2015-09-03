@@ -7,7 +7,7 @@ import java.net.UnknownHostException;
 
 public class ServerComms
 {
-	private static final int port = 1635;
+	private static final int port = 3235;
 	private static final String HostName = "localhost";
 	
 	public static int sCI(String word, int newText) throws IOException

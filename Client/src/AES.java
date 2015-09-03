@@ -27,6 +27,8 @@ public class AES
 		String symKeyHex = toHex(symKeyPlain);
 		final byte[] symKeyData = DatatypeConverter.parseHexBinary(symKeyHex);
 		
+		final byte[] symKeyDataP = symKeyPlain.getBytes();
+		
 		final byte[] encodedMessage = plainMessage.getBytes(Charset.forName("UTF-8"));
 		try
 		{
@@ -34,7 +36,7 @@ public class AES
 			final int blockSize = cipher.getBlockSize();
 			
 			// create the key
-			final SecretKeySpec symKey = new SecretKeySpec(symKeyData, "AES");
+			final SecretKeySpec symKey = new SecretKeySpec(symKeyDataP, "AES");
 			
 			// generate random IV using block size (possibly create a method for
 			// this)
