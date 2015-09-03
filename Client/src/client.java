@@ -14,7 +14,15 @@ public class client
 		if (start.checkKey())
 		{
 			System.out.println("I noticed that you had a key stored. Would you like for me to retrieve it?");
-			String shouldRetrieveKey = in.nextLine();
+			String shouldRetrieveKey = "";
+			if (!start.debug)
+			{
+				shouldRetrieveKey = in.nextLine();
+			}
+			else
+			{
+				shouldRetrieveKey = "yes";
+			}
 			if (shouldRetrieveKey.equalsIgnoreCase("yes"))
 			{
 				key = start.getKey();
@@ -46,7 +54,15 @@ public class client
 			System.out.println("All right. I've retrieved the following key:");
 			System.out.println(key);
 			System.out.println("Does that look correct?");
-			String correctKey = in.nextLine();
+			String correctKey = "";
+			if (!start.debug)
+			{
+				correctKey = in.nextLine();
+			}
+			else
+			{
+				correctKey = "yes";
+			}
 			if (!correctKey.equalsIgnoreCase("yes"))
 			{
 				System.out.println("Okay then. Please enter the key you generated or were given.");

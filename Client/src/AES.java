@@ -16,7 +16,10 @@ public class AES
 	
 	public static String toHex(String toBeHex) throws UnsupportedEncodingException
 	{
-		return String.format("%x", new BigInteger(1, toBeHex.getBytes(toBeHex)));
+		return String.format("%040x", new BigInteger(1, toBeHex.getBytes(/*
+																		 * YOUR_CHARSET
+																		 * ?
+																		 */)));
 	}
 	
 	public static String encrypt(final String plainMessage, final String symKeyPlain) throws UnsupportedEncodingException

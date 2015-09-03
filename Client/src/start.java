@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class start
 {
+	public static boolean debug = true;
 	private static String key = "";
 	private static boolean used = false;
 	
@@ -14,7 +15,15 @@ public class start
 		Scanner in = new Scanner(System.in);
 		int action = 0;
 		System.out.println("Welcome! Would you like to generate a key or connect to the server? Please enter \"connect\" or \"generate\".");
-		String firstInput = in.nextLine();
+		String firstInput = "";
+		if (!debug)
+		{
+			firstInput = in.nextLine();
+		}
+		else
+		{
+			firstInput = "generate";
+		}
 		if (firstInput.equalsIgnoreCase("connect"))
 		{
 			action = 1;
@@ -47,7 +56,15 @@ public class start
 			System.out.println("Do NOT give this key to them over ANY electronic means, or you may as well just be commnunicating in plain text.");
 			System.out.println("In a minute, you will be prompted to enter your key. Please enter the key that you have just generated there.");
 			System.out.println("If you'd like, I can have this placed into a text file for you to give to them. Would you like for me to do that?");
-			String textfile = in.nextLine();
+			String textfile = "";
+			if (!debug)
+			{
+				textfile = in.nextLine();
+			}
+			else
+			{
+				textfile = "yes";
+			}
 			if (textfile.equalsIgnoreCase("yes"))
 			{
 				@SuppressWarnings("resource")
