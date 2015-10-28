@@ -10,7 +10,6 @@ public class Start
 	public static boolean prompts = false;
 	static Scanner in = new Scanner(System.in);
 	public static IO out = new IO("soi");
-	public static boolean localHost = false;
 	
 	public static void main(String[] args) throws Exception
 	{

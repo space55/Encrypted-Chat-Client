@@ -94,7 +94,7 @@ public class ChatClient
 		// Make connection and initialize streams
 		String serverAddress = getServerAddress();
 		@SuppressWarnings("resource")
-		Socket socket = new Socket(Client.ip, Client.port);
+		Socket socket = new Socket(serverAddress, 9001);
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		out = new PrintWriter(socket.getOutputStream(), true);
 		

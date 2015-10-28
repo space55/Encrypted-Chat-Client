@@ -37,15 +37,15 @@ public class Client
 						key = inputKey;
 					}
 				}
-				else
+			}
+			else
+			{
+				String inputKey = out.nextLine("Okay. Then please enter the key the other person has given you.");
+				while (inputKey.length() != 64)
 				{
-					String inputKey = out.nextLine("Okay. Then please enter the key the other person has given you.");
-					while (inputKey.length() != 64)
-					{
-						inputKey = out.nextLine("Your key is invalid. Please enter it again");
-					}
-					key = inputKey;
+					inputKey = out.nextLine("Your key is invalid. Please enter it again");
 				}
+				key = inputKey;
 			}
 			if (Start.prompts)
 			{

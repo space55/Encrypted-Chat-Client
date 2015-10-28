@@ -4,7 +4,6 @@ public class Client
 	
 	public static String username = "";
 	public static String ip = "localhost";
-	public static int port = 9001;
 	
 	public static void run() throws Exception
 	{
@@ -37,15 +36,15 @@ public class Client
 						key = inputKey;
 					}
 				}
-				else
+			}
+			else
+			{
+				String inputKey = out.nextLine("Okay. Then please enter the key the other person has given you.");
+				while (inputKey.length() != 64)
 				{
-					String inputKey = out.nextLine("Okay. Then please enter the key the other person has given you.");
-					while (inputKey.length() != 64)
-					{
-						inputKey = out.nextLine("Your key is invalid. Please enter it again");
-					}
-					key = inputKey;
+					inputKey = out.nextLine("Your key is invalid. Please enter it again");
 				}
+				key = inputKey;
 			}
 			if (Start.prompts)
 			{
@@ -71,11 +70,6 @@ public class Client
 				}
 			}
 			Start.initKey();
-			if (!Start.localHost)
-			{
-				String ip = out.nextLine("What is the IP of the server?");
-				setIp(ip);
-			}
 			out.println("Connecting to server...");
 			username = out.forceInput("Please enter a username");
 			ChatClient.init();
@@ -90,32 +84,5 @@ public class Client
 	public static String getKey()
 	{
 		return key;
-	}
-	
-	public static void setIp(String uIp)
-	{
-		try
-		{
-			if (!Start.localHost)
-			{
-				if (uIp.contains(":"))
-				{
-					ip = uIp.substring(0, uIp.indexOf(":"));
-					port = Integer.parseInt(uIp.substring(uIp.indexOf(":") + 1));
-					if (Start.debug)
-					{
-						Start.out.println("IP: " + ip + "\nPort: " + port);
-					}
-				}
-				else
-				{
-					ip = uIp;
-				}
-			}
-		}
-		catch (Exception e)
-		{
-			Start.out.println("Incorrect IP");
-		}
 	}
 }
