@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class ConsoleInput implements Runnable
+{
+	@Override
+	public void run()
+	{
+		Scanner console = new Scanner(System.in);
+		while (!Server.stop)
+		{
+			String consInput = console.nextLine();
+			consInput.toLowerCase();
+			if (consInput.equals("stop"))
+			{
+				Server.stop = true;
+			}
+			break;
+		}
+	}
+	
+}

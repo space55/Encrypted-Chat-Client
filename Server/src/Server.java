@@ -30,7 +30,7 @@ public class Server
 	/**
 	 * The port that the server listens on.
 	 */
-	private static final int PORT = 9001;
+	public static int port = 9001;
 	
 	/**
 	 * The set of all names of clients in the chat room. Maintained so that we
@@ -44,6 +44,8 @@ public class Server
 	 */
 	private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
 	
+	public static boolean stop = false;
+	
 	/**
 	 * The appplication main method, which just listens on a port and spawns
 	 * handler threads.
@@ -51,18 +53,38 @@ public class Server
 	public static void main(String[] args) throws Exception
 	{
 		System.out.println("The chat server is running.");
-		ServerSocket listener = new ServerSocket(PORT);
-		try
+		Thread cons = new Thread(new ConsoleInput());
+		cons.start();
+		System.out.println("Console Initialized");
+		boolean cont = false;
+		System.out.println("Starting Loop");
+		while (!stop && !cont)
 		{
-			while (true)
+			System.out.print("");
+			if (ConsoleInput.run)
 			{
-				new Handler(listener.accept()).start();
+				System.out.println("Starting Server");
+				ServerSocket listener = new ServerSocket(port);
+				System.out.println("Socket initialized");
+				try
+				{
+					System.out.println("Waiting to Create Handlers");
+					while (true)
+					{
+						new Handler(listener.accept()).start();
+						System.out.println("Accepted Listener");
+					}
+				}
+				finally
+				{
+					System.out.println("Closing Listeners");
+					listener.close();
+					System.out.println("Shutting Down Console Input");
+					cons.interrupt();
+				}
 			}
 		}
-		finally
-		{
-			listener.close();
-		}
+		
 	}
 	
 	/**
@@ -83,6 +105,7 @@ public class Server
 		 */
 		public Handler(Socket socket)
 		{
+			System.out.println("Handler being created");
 			this.socket = socket;
 		}
 		
@@ -94,6 +117,7 @@ public class Server
 		 */
 		public void run()
 		{
+			System.out.println("Handler Run");
 			try
 			{
 				
@@ -105,7 +129,8 @@ public class Server
 				// a name is submitted that is not already used. Note that
 				// checking for the existence of a name and adding the name
 				// must be done while locking the set of names.
-				while (true)
+				System.out.println("Waiting for name");
+				while (!stop)
 				{
 					out.println("SUBMITNAME");
 					name = in.readLine();
@@ -122,6 +147,7 @@ public class Server
 						}
 					}
 				}
+				System.out.println("Got name: " + name);
 				
 				// Now that a successful name has been chosen, add the
 				// socket's print writer to the set of all writers so
@@ -131,9 +157,11 @@ public class Server
 				
 				// Accept messages from this client and broadcast them.
 				// Ignore other clients that cannot be broadcasted to.
-				while (true)
+				System.out.println("Waiting for messages from " + name);
+				while (!stop)
 				{
 					String input = in.readLine();
+					System.out.println("Message Received from " + name + ": " + input);
 					if (input == null)
 					{
 						return;

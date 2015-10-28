@@ -1,0 +1,18 @@
+
+public class ConsoleInput implements Runnable
+{
+	public ConsoleInput()
+	{
+		
+	}
+
+	@Override
+	public void run()
+	{
+		while (!Server.stop)
+		{
+			
+		}
+	}
+
+}
