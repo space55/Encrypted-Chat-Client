@@ -1,0 +1,38 @@
+import javax.swing.JOptionPane;
+
+public class IO
+{
+	String type = "";
+	
+	public IO(String messageType)
+	{
+		if (messageType.equals("soi") || messageType.equals("jop"))
+		{
+			type = messageType;
+		}
+	}
+	
+	public void print(String out)
+	{
+		if (type.equals("soi"))
+		{
+			System.out.print(out);
+		}
+		else if (type.equals("jop"))
+		{
+			JOptionPane.showMessageDialog(null, out);
+		}
+	}
+	
+	public void println(String out)
+	{
+		if (type.equals("soi"))
+		{
+			System.out.println(out);
+		}
+		else if (type.equals("jop"))
+		{
+			JOptionPane.showMessageDialog(null, out);
+		}
+	}
+}

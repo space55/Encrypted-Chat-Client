@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 
 import javax.swing.JFrame;
@@ -29,10 +28,9 @@ import javax.swing.JTextField;
 
 public class ChatClient
 {
-	
 	BufferedReader in;
 	PrintWriter out;
-	JFrame frame = new JFrame("Chatter");
+	JFrame frame = new JFrame("Connected as " + Client.username);
 	JTextField textField = new JTextField(40);
 	JTextArea messageArea = new JTextArea(8, 40);
 	
@@ -46,7 +44,6 @@ public class ChatClient
 	
 	public ChatClient()
 	{
-		
 		// Layout GUI
 		textField.setEditable(false);
 		messageArea.setEditable(false);
@@ -66,15 +63,7 @@ public class ChatClient
 			{
 				String output = textField.getText();
 				String encryptedOutput = null;
-				try
-				{
-					encryptedOutput = AES.encrypt(output, client.getKey());
-				}
-				catch (UnsupportedEncodingException e1)
-				{
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				encryptedOutput = AES.encrypt(output);
 				out.println(encryptedOutput);
 				textField.setText("");
 			}
@@ -86,7 +75,7 @@ public class ChatClient
 	 */
 	private String getServerAddress()
 	{
-		return client.ip;
+		return Client.ip;
 	}
 	
 	/**
@@ -94,7 +83,7 @@ public class ChatClient
 	 */
 	private String getName()
 	{
-		return client.username;
+		return Client.username;
 	}
 	
 	/**
@@ -102,7 +91,6 @@ public class ChatClient
 	 */
 	private void run() throws IOException
 	{
-		
 		// Make connection and initialize streams
 		String serverAddress = getServerAddress();
 		@SuppressWarnings("resource")
@@ -111,6 +99,7 @@ public class ChatClient
 		out = new PrintWriter(socket.getOutputStream(), true);
 		
 		// Process all messages from server, according to the protocol.
+		messageArea.append("Server: Connected to server.\n");
 		while (true)
 		{
 			String line = in.readLine();
@@ -124,13 +113,31 @@ public class ChatClient
 			}
 			else if (line.startsWith("MESSAGE"))
 			{
-				messageArea.append(line.substring(8) + "\n");
+				if (Start.debug)
+				{
+					System.out.println(line);
+				}
+				String noMessage = line.substring(8);
+				String text = noMessage.substring(noMessage.indexOf(':') + 2);
+				String uName = noMessage.substring(0, noMessage.indexOf(':'));
+				if (Start.debug)
+				{
+					System.out.println("Text: " + text);
+				}
+				try
+				{
+					messageArea.append(uName + ": " + AES.decrypt(text) + "\n");
+				}
+				catch (Exception e)
+				{
+					messageArea.append(uName + ": #Wrong Key#");
+				}
 			}
 		}
 	}
 	
 	/**
-	 * Runs the client as an application with a closeable frame.
+	 * Runs the client as an application with a closable frame.
 	 */
 	public static void init() throws Exception
 	{

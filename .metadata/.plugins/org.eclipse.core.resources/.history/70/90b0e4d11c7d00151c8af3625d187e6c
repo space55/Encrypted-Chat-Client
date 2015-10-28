@@ -1,0 +1,96 @@
+public class Client
+{
+	private static String key = "";
+	
+	public static String username = "";
+	public static String ip = "localhost";
+	
+	public static void run() throws Exception
+	{
+		IO out = Start.out;
+		if (Start.checkKey())
+		{
+			if (Start.prompts)
+			{
+				out.println("I noticed that you had a key stored. Would you like for me to retrieve it?");
+			}
+			String shouldRetrieveKey = "";
+			if (!Start.debug && Start.prompts)
+			{
+				shouldRetrieveKey = Start.out.nextLine();
+			}
+			else
+			{
+				shouldRetrieveKey = "yes";
+			}
+			if (shouldRetrieveKey.equalsIgnoreCase("yes"))
+			{
+				key = Start.getKey();
+				if (key.equals("illegal"))
+				{
+					out.println("You do not have access permissions to the stored key.");
+					key = "";
+					out.println("Please enter the key the other person has given to you or you have generated");
+					String inputKey = Start.out.nextLine();
+					while (inputKey.length() != 64)
+					{
+						out.println("Your key is invalid. Please enter it again");
+						inputKey = Start.out.nextLine();
+					}
+					key = inputKey;
+				}
+			}
+			else
+			{
+				out.println("Okay. Then please enter the key the other person has given you.");
+				String inputKey = Start.out.nextLine();
+				while (inputKey.length() != 64)
+				{
+					out.println("Your key is invalid. Please enter it again");
+					inputKey = Start.out.nextLine();
+				}
+				key = inputKey;
+			}
+			if (Start.prompts)
+			{
+				out.println("You've given me the following key:");
+				out.println(key);
+				out.println("Does that look correct?");
+				String correctKey = "";
+				if (!Start.debug)
+				{
+					correctKey = Start.out.nextLine();
+				}
+				else
+				{
+					correctKey = "yes";
+				}
+				if (!correctKey.equalsIgnoreCase("yes"))
+				{
+					out.println("Okay then. Please enter the key you generated or were given.");
+					String inputKey = Start.out.nextLine();
+					while (inputKey.length() != 64)
+					{
+						out.println("Your key is invalid. Please enter it again");
+						inputKey = Start.out.nextLine();
+					}
+					key = inputKey;
+				}
+			}
+			Start.initKey();
+			out.println("Connecting to server...");
+			username = out.forceInput("Please enter a username");
+			ChatClient.init();
+			while (true)
+			{
+				String plaintext = Start.out.nextLine();
+				String output = AES.encrypt(plaintext);
+			}
+		}
+	}
+	
+	public static String getKey()
+	{
+		return key;
+	}
+}

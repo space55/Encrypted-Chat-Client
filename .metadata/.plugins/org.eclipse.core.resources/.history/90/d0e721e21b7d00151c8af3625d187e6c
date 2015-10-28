@@ -1,0 +1,97 @@
+import javax.swing.JOptionPane;
+
+public class Client
+{
+	private static String key = "";
+	
+	public static String username = "";
+	public static String ip = "localhost";
+	
+	public static void run() throws Exception
+	{
+		if (Start.checkKey())
+		{
+			if (Start.prompts)
+			{
+				System.out.println("I noticed that you had a key stored. Would you like for me to retrieve it?");
+			}
+			String shouldRetrieveKey = "";
+			if (!Start.debug && Start.prompts)
+			{
+				shouldRetrieveKey = Start.in.nextLine();
+			}
+			else
+			{
+				shouldRetrieveKey = "yes";
+			}
+			if (shouldRetrieveKey.equalsIgnoreCase("yes"))
+			{
+				key = Start.getKey();
+				if (key.equals("illegal"))
+				{
+					System.out.println("You do not have access permissions to the stored key.");
+					key = "";
+					System.out.println("Please enter the key the other person has given to you or you have generated");
+					String inputKey = in.nextLine();
+					while (inputKey.length() != 64)
+					{
+						System.out.println("Your key is invalid. Please enter it again");
+						inputKey = in.nextLine();
+					}
+					key = inputKey;
+				}
+			}
+			else
+			{
+				System.out.println("Okay. Then please enter the key the other person has given you.");
+				String inputKey = in.nextLine();
+				while (inputKey.length() != 64)
+				{
+					System.out.println("Your key is invalid. Please enter it again");
+					inputKey = in.nextLine();
+				}
+				key = inputKey;
+			}
+			if (Start.prompts)
+			{
+				System.out.println("You've given me the following key:");
+				System.out.println(key);
+				System.out.println("Does that look correct?");
+				String correctKey = "";
+				if (!Start.debug)
+				{
+					correctKey = in.nextLine();
+				}
+				else
+				{
+					correctKey = "yes";
+				}
+				if (!correctKey.equalsIgnoreCase("yes"))
+				{
+					System.out.println("Okay then. Please enter the key you generated or were given.");
+					String inputKey = in.nextLine();
+					while (inputKey.length() != 64)
+					{
+						System.out.println("Your key is invalid. Please enter it again");
+						inputKey = in.nextLine();
+					}
+					key = inputKey;
+				}
+			}
+			Start.initKey();
+			System.out.println("Connecting to server...");
+			username = JOptionPane.showInputDialog("Please enter a username");
+			ChatClient.init();
+			while (true)
+			{
+				String plaintext = in.nextLine();
+				String output = AES.encrypt(plaintext);
+			}
+		}
+	}
+	
+	public static String getKey()
+	{
+		return key;
+	}
+}
