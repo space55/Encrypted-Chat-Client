@@ -52,7 +52,8 @@ public class Start
 			String textfile = "";
 			if (prompts)
 			{
-				out.println("Please write this down on a piece of paper, and give that paper to another person you'd like to be able to chat with." + "\nDo NOT give this key to them over ANY electronic means, or you may as well just be commnunicating in plain text.");
+				out.println("Please write this down on a piece of paper, and give that paper to another person you'd like to be able to chat with."
+						+ "\nDo NOT give this key to them over ANY electronic means, or you may as well just be commnunicating in plain text.");
 				if (!debug)
 				{
 					textfile = out.nextLine("If you'd like, I can have this placed into a text file for you to give to them. Would you like for me to do that?");

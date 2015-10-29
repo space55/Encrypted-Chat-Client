@@ -81,7 +81,7 @@ public class Client
 			ChatClient.init();
 			while (true)
 			{
-				// String plaintext = out.nextLine();
+				String plaintext = out.nextLine();
 				// String output = AES.encrypt(plaintext);
 			}
 		}

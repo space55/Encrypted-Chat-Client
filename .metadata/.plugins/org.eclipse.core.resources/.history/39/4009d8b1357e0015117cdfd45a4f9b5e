@@ -81,8 +81,8 @@ public class Client
 			ChatClient.init();
 			while (true)
 			{
-				// String plaintext = out.nextLine();
-				// String output = AES.encrypt(plaintext);
+				String plaintext = out.nextLine();
+				String output = AES.encrypt(plaintext);
 			}
 		}
 	}
@@ -110,6 +110,10 @@ public class Client
 				else
 				{
 					ip = uIp;
+				}
+				if (uIp.equals(""))
+				{
+					ip = "localHost";
 				}
 			}
 		}

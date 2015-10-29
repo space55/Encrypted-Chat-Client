@@ -71,6 +71,14 @@ public class ChatClient
 	}
 	
 	/**
+	 * Prompt for and return the address of the server.
+	 */
+	private String getServerAddress()
+	{
+		return Client.ip;
+	}
+	
+	/**
 	 * Prompt for and return the desired screen name.
 	 */
 	private String getName()

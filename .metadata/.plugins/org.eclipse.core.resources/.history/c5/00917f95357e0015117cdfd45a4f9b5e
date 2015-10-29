@@ -7,13 +7,15 @@ public class Start
 	public static boolean debug = false;
 	private static String key = "";
 	private static boolean used = false;
-	public static boolean prompts = true;
+	public static boolean prompts = false;
 	static Scanner in = new Scanner(System.in);
-	public static IO out = new IO("jop");
+	public static IO out = new IO("soi");
 	public static boolean localHost = false;
 	
 	public static void main(String[] args) throws Exception
 	{
+		// TODO Auto-generated method stub
+		@SuppressWarnings("resource")
 		int action = 0;
 		String firstInput = "";
 		if (!debug)
@@ -48,11 +50,14 @@ public class Start
 		if (action == 2)
 		{
 			key = GenerateKey.generateKey();
-			out.println("Here's your key:\n" + key);
+			out.println("Here's your key:");
+			out.println(key);
 			String textfile = "";
 			if (prompts)
 			{
-				out.println("Please write this down on a piece of paper, and give that paper to another person you'd like to be able to chat with." + "\nDo NOT give this key to them over ANY electronic means, or you may as well just be commnunicating in plain text.");
+				out.println("Please write this down on a piece of paper, and give that paper to another person you'd like to be able to chat with.");
+				out.println("Do NOT give this key to them over ANY electronic means, or you may as well just be commnunicating in plain text.");
+				out.println("In a minute, you will be prompted to enter your key. Please enter the key that you have just generated there.");
 				if (!debug)
 				{
 					textfile = out.nextLine("If you'd like, I can have this placed into a text file for you to give to them. Would you like for me to do that?");

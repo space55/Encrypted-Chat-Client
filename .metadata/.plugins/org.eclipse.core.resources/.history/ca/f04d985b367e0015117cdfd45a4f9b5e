@@ -71,6 +71,14 @@ public class ChatClient
 	}
 	
 	/**
+	 * Prompt for and return the address of the server.
+	 */
+	private String getServerAddress()
+	{
+		return Client.ip;
+	}
+	
+	/**
 	 * Prompt for and return the desired screen name.
 	 */
 	private String getName()
@@ -84,6 +92,7 @@ public class ChatClient
 	private void run() throws IOException
 	{
 		// Make connection and initialize streams
+		String serverAddress = getServerAddress();
 		@SuppressWarnings("resource")
 		Socket socket = new Socket(Client.ip, Client.port);
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
