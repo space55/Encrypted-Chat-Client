@@ -63,10 +63,6 @@ public class ChatClient
 			public void actionPerformed(ActionEvent e)
 			{
 				String output = textField.getText();
-				if (output.startsWith("/"))
-				{
-				
-				}
 				String encryptedOutput = null;
 				encryptedOutput = AES.encrypt(output);
 				out.println(encryptedOutput);

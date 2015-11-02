@@ -119,7 +119,7 @@ public class IO
 		return JOptionPane.showInputDialog(message);
 	}
 	
-	public String getType()
+	public static String getType()
 	{
 		return type;
 	}

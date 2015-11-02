@@ -76,11 +76,8 @@ public class Client
 				String ip = out.nextLine("What is the IP of the server?");
 				setIp(ip);
 			}
+			out.println("Connecting to server...");
 			username = out.forceInput("Please enter a username");
-			if (out.getType().equals("soi"))
-			{
-				out.println("Connecting to server...");
-			}
 			ChatClient.init();
 			/*
 			 * while (true) { String plaintext = out.nextLine(); String output =

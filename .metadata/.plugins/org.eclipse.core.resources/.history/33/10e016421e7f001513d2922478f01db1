@@ -118,9 +118,4 @@ public class IO
 	{
 		return JOptionPane.showInputDialog(message);
 	}
-	
-	public String getType()
-	{
-		return type;
-	}
 }

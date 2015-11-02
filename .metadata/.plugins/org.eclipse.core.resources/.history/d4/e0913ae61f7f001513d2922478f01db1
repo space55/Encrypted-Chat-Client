@@ -63,10 +63,6 @@ public class ChatClient
 			public void actionPerformed(ActionEvent e)
 			{
 				String output = textField.getText();
-				if (output.startsWith("/"))
-				{
-				
-				}
 				String encryptedOutput = null;
 				encryptedOutput = AES.encrypt(output);
 				out.println(encryptedOutput);
@@ -91,7 +87,6 @@ public class ChatClient
 		messageArea.append("Connecting to Server...");
 		// Make connection and initialize streams
 		int time = 0;
-		boolean work = false;
 		while (time < 10)
 		{
 			try
@@ -100,7 +95,6 @@ public class ChatClient
 				Socket socket = new Socket(Client.ip, Client.port);
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				out = new PrintWriter(socket.getOutputStream(), true);
-				work = true;
 			}
 			catch (ConnectException e)
 			{
@@ -114,21 +108,26 @@ public class ChatClient
 					e1.printStackTrace();
 				}
 			}
-			catch (Exception e)
-			{
-				time = 10;
-				messageArea.append("Failed to connect to server: Unknown Error\n");
-			}
 		}
-		
-		if (!work)
+		try
+		{
+			@SuppressWarnings("resource")
+			Socket socket = new Socket(Client.ip, Client.port);
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			out = new PrintWriter(socket.getOutputStream(), true);
+		}
+		catch (ConnectException e)
 		{
 			messageArea.append("Failed to connect to server: Connection refused\n");
 		}
+		catch (Exception e)
+		{
+			messageArea.append("Failed to connect to server: Unknown error\n");
+		}
+		
 		// Process all messages from server, according to the protocol.
-		boolean quit = false;
 		messageArea.append("Server: Connected to server.\n");
-		while (!quit && work)
+		while (true)
 		{
 			String line = in.readLine();
 			if (line.startsWith("SUBMITNAME"))
@@ -162,9 +161,6 @@ public class ChatClient
 				}
 			}
 		}
-		in.close();
-		out.close();
-		messageArea.append("Shutting Down");
 	}
 	
 	/**

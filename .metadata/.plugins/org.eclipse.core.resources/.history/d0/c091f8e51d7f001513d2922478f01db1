@@ -1,6 +1,3 @@
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.Scanner;
@@ -11,7 +8,6 @@ public class Start
 	private static String key = "";
 	private static boolean used = false;
 	public static boolean prompts = true;
-	public static boolean textf = false;
 	static Scanner in = new Scanner(System.in);
 	public static IO out = new IO("jop");
 	public static boolean localHost = false;
@@ -52,15 +48,12 @@ public class Start
 		if (action == 2)
 		{
 			key = GenerateKey.generateKey();
-			out.println("Here's your key:\n" + key + "\nIt wil automatically be copied to your clipboard.");
-			StringSelection stringSelection = new StringSelection(key);
-			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-			clpbrd.setContents(stringSelection, null);
+			out.println("Here's your key:\n" + key);
 			String textfile = "";
 			if (prompts)
 			{
-				out.println("Your key has been copied to your clipboard.\n" + "Please paste it onto a text document, print that page, and give that paper to another person you'd like to be able to chat with." + "\nDo NOT give this key to them over ANY electronic means, or you may as well just be commnunicating in plain text.");
-				if (!debug && prompts && textf)
+				out.println("Please write this down on a piece of paper, and give that paper to another person you'd like to be able to chat with." + "\nDo NOT give this key to them over ANY electronic means, or you may as well just be commnunicating in plain text.");
+				if (!debug && prompts)
 				{
 					textfile = out.nextLine("If you'd like, I can have this placed into a text file for you to give to them. Would you like for me to do that?");
 				}
@@ -91,10 +84,7 @@ public class Start
 			key = enteredKey;
 			out.println("Thank you.");
 		}
-		if (out.getType().equals("soi"))
-		{
-			out.println("I'm sending you off to connect to the server.");
-		}
+		out.println("I'm sending you off to connect to the server.");
 		Client.run();
 	}
 	

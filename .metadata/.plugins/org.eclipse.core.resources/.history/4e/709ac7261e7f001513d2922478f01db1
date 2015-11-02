@@ -91,10 +91,7 @@ public class Start
 			key = enteredKey;
 			out.println("Thank you.");
 		}
-		if (out.getType().equals("soi"))
-		{
-			out.println("I'm sending you off to connect to the server.");
-		}
+		out.println("I'm sending you off to connect to the server.");
 		Client.run();
 	}
 	
